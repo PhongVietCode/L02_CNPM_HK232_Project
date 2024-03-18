@@ -19,8 +19,7 @@ namespace MyCompanyName.AbpZeroTemplate.EntityFrameworkCore
     {
         /* Define an IDbSet for each entity of the application */
 
-        public virtual DbSet<LegalDocument> LegalDocuments { get; set; }
-
+        public virtual DbSet<Document> Documents { get; set; }
         public virtual DbSet<BinaryObject> BinaryObjects { get; set; }
 
         public virtual DbSet<Friendship> Friendships { get; set; }

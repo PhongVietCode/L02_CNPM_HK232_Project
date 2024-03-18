@@ -4,6 +4,7 @@ import { NgModule } from '@angular/core';
 import * as ApiServiceProxies from './service-proxies';
 import { ZeroRefreshTokenService } from '@account/auth/zero-refresh-token.service';
 import { ZeroTemplateHttpConfigurationService } from './zero-template-http-configuration.service';
+import { AppAuthService } from '@app/shared/common/auth/app-auth.service';
 
 @NgModule({
     providers: [
@@ -56,6 +57,7 @@ import { ZeroTemplateHttpConfigurationService } from './zero-template-http-confi
         { provide: RefreshTokenService, useClass: ZeroRefreshTokenService },
         { provide: AbpHttpConfigurationService, useClass: ZeroTemplateHttpConfigurationService },
         { provide: HTTP_INTERCEPTORS, useClass: AbpHttpInterceptor, multi: true },
+        ApiServiceProxies.DocumentServiceProxy,
     ],
 })
 export class ServiceProxyModule {}

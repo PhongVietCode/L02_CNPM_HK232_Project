@@ -1,0 +1,95 @@
+<div [@routerTransition]>
+    <div class="content d-flex flex-column flex-column-fluid">
+        <sub-header [title]="Documents | localize" [description]="DocumentsHeaderInfo | localize">
+            <div role="actions">
+                <button pButton pRipple label="Add new document" icon="pi pi-plus" class="p-button-primary mr-2" (click)="createDocumentModal.show()"></button>
+            </div>
+        </sub-header>
+        <div class="card">
+            <div class="col-12 md:col-4 m-4">
+                <div class="p-inputgroup d-flex justify-content-center">
+                    <input type="text" pInputText placeholder="Search" style="border: #828282 solid; width: 90%; height: 40px;">   
+                    <button type="button" pButton pRipple icon="pi pi-search" styleClass="p-button-warn"></button>      
+                </div>
+            </div>
+            <p-table 
+                #dt 
+                [value]="documents"
+                [rowHover]="true"
+                [rows]="10"
+                [paginator]="true"
+                currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+                >
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th style="width: 3rem">
+                            <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                        </th>
+                        <th pSortableColumn="idNumber">
+                            <div class="flex justify-content-between align-items-center">
+                                IDNumber
+                                <p-sortIcon field="idNumber"></p-sortIcon>
+                            </div>
+                        </th>
+                        <th pSortableColumn="title">
+                            <div class="flex justify-content-between align-items-center">
+                                Title
+                                <p-sortIcon field="title"></p-sortIcon>
+                            </div>
+                        </th>
+                        <th pSortableColumn="doctype">
+                            <div class="flex justify-content-between align-items-center">
+                                Doctype
+                                <p-sortIcon field="doctype"></p-sortIcon>
+                            </div>
+                        </th>
+                        <th pSortableColumn="startDay">
+                            <div class="flex justify-content-between align-items-center">
+                                Start Day
+                                <p-sortIcon field="startDay"></p-sortIcon>
+                            </div>
+                        </th>
+                        <th pSortableColumn="expireDay">
+                            <div class="flex justify-content-between align-items-center">
+                                Expired Day
+                                <p-sortIcon field="expireDay"></p-sortIcon>
+                            </div>
+                        </th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-document>
+                    <tr class="p-selectable-row">
+                        <td>
+                            <p-tableCheckbox [value]="document"></p-tableCheckbox>
+                        </td>
+                        <td>
+                            <span class="p-column-title">IDNumber</span>
+                            {{document.idNumber}}
+                        </td>
+                        <td>
+                            <span class="p-column-title">Title</span>
+                            {{document.title}}
+                        </td>
+                        <td>
+                            <span class="p-column-title">Doctype</span>
+                            {{document.doctype}}
+                        </td>
+                        <td>
+                            <span class="p-column-title">Start Day</span>
+                            {{document.startDay}}
+                        </td>
+                        <td>
+                            <span class="p-column-title">Expired Day</span>
+                            {{document.expireDay}}
+                        </td>
+                        <td style="text-align: center">
+                            <button pButton type="button" class="p-button-info mx-4" icon="pi pi-pencil"></button>
+                            <button pButton type="button" class="p-button-danger" icon="pi pi-trash"></button>
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+        <createDocumentModal #createDocumentModal (modalSave)="getDocument()"></createDocumentModal>
+    </div>
+</div>

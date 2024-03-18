@@ -15,6 +15,7 @@ import { BsDatepickerConfig, BsDaterangepickerConfig, BsLocaleService } from 'ng
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { NgxBootstrapDatePickerConfigService } from 'assets/ngx-bootstrap/ngx-bootstrap-datepicker-config.service';
 import { SubheaderModule } from '@app/shared/common/sub-header/subheader.module';
+import { DocumentModule } from './document/document.module';
 
 NgxBootstrapDatePickerConfigService.registerNgxBootstrapDatePickerLocales();
 
@@ -33,8 +34,10 @@ NgxBootstrapDatePickerConfigService.registerNgxBootstrapDatePickerLocales();
         BsDropdownModule.forRoot(),
         PopoverModule.forRoot(),
         SubheaderModule,
+        DocumentModule
     ],
-    declarations: [],
+    declarations: [
+    ],
     providers: [
         { provide: BsDatepickerConfig, useFactory: NgxBootstrapDatePickerConfigService.getDatepickerConfig },
         { provide: BsDaterangepickerConfig, useFactory: NgxBootstrapDatePickerConfigService.getDaterangepickerConfig },

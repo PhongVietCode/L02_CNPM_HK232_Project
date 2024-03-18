@@ -1816,7 +1816,7 @@ namespace MyCompanyName.AbpZeroTemplate.Migrations
                     b.ToTable("AppFriendships");
                 });
 
-            modelBuilder.Entity("MyCompanyName.AbpZeroTemplate.L02Project.LegalDocument", b =>
+            modelBuilder.Entity("MyCompanyName.AbpZeroTemplate.L02Project.Document", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -1866,7 +1866,7 @@ namespace MyCompanyName.AbpZeroTemplate.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("LegalDocument");
+                    b.ToTable("Document");
                 });
 
             modelBuilder.Entity("MyCompanyName.AbpZeroTemplate.MultiTenancy.Accounting.Invoice", b =>

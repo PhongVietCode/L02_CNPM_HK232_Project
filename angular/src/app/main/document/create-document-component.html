@@ -1,0 +1,42 @@
+<div bsModal #modal="bs-modal" (onShown)="onShown()" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modal" aria-hidden="true" [config]="{backdrop: 'static'}">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form *ngIf="active" #documentForm="ngForm" novalidate (ngSubmit)="save()">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span>{{"Add new document" | localize}}</span>
+                    </h4>
+                    <button type="button" class="close" (click)="close()" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>{{"IDNumber" | localize}}</label>
+                        <input #titleInput class="form-control" type="text" name="idNumber" [(ngModel)]="document.idNumber">
+                    </div>
+                    <div class="form-group">
+                        <label>{{"Title" | localize}}</label>
+                        <input class="form-control"  name="title" [(ngModel)]="document.title">
+                    </div>
+                    <div class="form-group">
+                        <label>{{"Doctype" | localize}}</label>
+                        <input class="form-control" name="doctype" [(ngModel)]="document.doctype">
+                    </div>
+                    <div class="form-group">
+                        <label>{{"StartDay" | localize}}</label>
+                        <input class="form-control" name="startDay" [(ngModel)]="document.startDay">
+                    </div>
+                    <div class="form-group">
+                        <label>{{"ExpiredDay" | localize}}</label>
+                        <input class="form-control" name="expireDay" [(ngModel)]="document.expireDay">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button [disabled]="saving" type="button" class="btn btn-secondary" (click)="close()">{{"Cancel" | localize}}</button>
+                    <button type="submit" class="btn btn-primary" [disabled]="!documentForm.form.valid" [buttonBusy]="saving" [busyText]="l('SavingWithThreeDot' | localize)"><i class="fa fa-save"></i> <span>{{"Save" | localize}}</span></button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

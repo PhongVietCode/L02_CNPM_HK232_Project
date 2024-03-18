@@ -31,6 +31,8 @@ using MyCompanyName.AbpZeroTemplate.Editions.Dto;
 using MyCompanyName.AbpZeroTemplate.Friendships;
 using MyCompanyName.AbpZeroTemplate.Friendships.Cache;
 using MyCompanyName.AbpZeroTemplate.Friendships.Dto;
+using MyCompanyName.AbpZeroTemplate.L02Project;
+using MyCompanyName.AbpZeroTemplate.L02Project.DTO;
 using MyCompanyName.AbpZeroTemplate.Localization.Dto;
 using MyCompanyName.AbpZeroTemplate.MultiTenancy;
 using MyCompanyName.AbpZeroTemplate.MultiTenancy.Dto;
@@ -164,6 +166,10 @@ namespace MyCompanyName.AbpZeroTemplate
             configuration.CreateMap<CreateUserDelegationDto, UserDelegation>();
 
             /* ADD YOUR OWN CUSTOM AUTOMAPPER MAPPINGS HERE */
+
+            configuration.CreateMap<Document, DocumentListDto>();
+            //configuration.CreateMap<Document, GetDocumentForEditOutput>();
+            configuration.CreateMap<CreateDocumentInput, Document>();
         }
     }
 }

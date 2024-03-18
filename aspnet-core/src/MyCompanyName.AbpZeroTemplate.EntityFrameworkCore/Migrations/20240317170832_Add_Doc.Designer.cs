@@ -12,8 +12,8 @@ using MyCompanyName.AbpZeroTemplate.EntityFrameworkCore;
 namespace MyCompanyName.AbpZeroTemplate.Migrations
 {
     [DbContext(typeof(AbpZeroTemplateDbContext))]
-    [Migration("20240314165053_Added LegalDocument")]
-    partial class AddedLegalDocument
+    [Migration("20240317170832_Add_Doc")]
+    partial class Add_Doc
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -1818,7 +1818,7 @@ namespace MyCompanyName.AbpZeroTemplate.Migrations
                     b.ToTable("AppFriendships");
                 });
 
-            modelBuilder.Entity("MyCompanyName.AbpZeroTemplate.L02Project.LegalDocument", b =>
+            modelBuilder.Entity("MyCompanyName.AbpZeroTemplate.L02Project.Document", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -1868,7 +1868,7 @@ namespace MyCompanyName.AbpZeroTemplate.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("LegalDocument");
+                    b.ToTable("Document");
                 });
 
             modelBuilder.Entity("MyCompanyName.AbpZeroTemplate.MultiTenancy.Accounting.Invoice", b =>

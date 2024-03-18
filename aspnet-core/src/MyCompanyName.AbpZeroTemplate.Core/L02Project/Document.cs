@@ -9,14 +9,13 @@ using System.Threading.Tasks;
 
 namespace MyCompanyName.AbpZeroTemplate.L02Project
 {
-    [Table("LegalDocument")]
-    public class LegalDocument : FullAuditedEntity
+    [Table("Document")]
+    public class Document : FullAuditedEntity
     {
         [Required]
         public virtual string IDNumber { get; set; }
         [Required]
         public virtual string Title { get; set; }
-        [Required]
         public virtual DocType Doctype { get; set; }
         [Required]
         public virtual string StartDay { get; set; }

@@ -5,12 +5,12 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace MyCompanyName.AbpZeroTemplate.Migrations
 {
-    public partial class AddedLegalDocument : Migration
+    public partial class Add_Doc : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "LegalDocument",
+                name: "Document",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -30,14 +30,14 @@ namespace MyCompanyName.AbpZeroTemplate.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_LegalDocument", x => x.Id);
+                    table.PrimaryKey("PK_Document", x => x.Id);
                 });
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "LegalDocument");
+                name: "Document");
         }
     }
 }

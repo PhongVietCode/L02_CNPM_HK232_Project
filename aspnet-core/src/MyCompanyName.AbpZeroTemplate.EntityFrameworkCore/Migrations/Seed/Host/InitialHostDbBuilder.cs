@@ -17,7 +17,7 @@ namespace MyCompanyName.AbpZeroTemplate.Migrations.Seed.Host
             new DefaultLanguagesCreator(_context).Create();
             new HostRoleAndUserCreator(_context).Create();
             new DefaultSettingsCreator(_context).Create();
-
+            new InitialDocumentCreator(_context).Create(); 
             _context.SaveChanges();
         }
     }
