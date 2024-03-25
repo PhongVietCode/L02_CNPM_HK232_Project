@@ -2901,6 +2901,166 @@ export class DocumentServiceProxy {
         }
         return _observableOf<void>(null as any);
     }
+
+    /**
+     * @param body (optional) 
+     * @return Success
+     */
+    editDocument(body: EditDocumentInput | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/Document/EditDocument";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json-patch+json",
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processEditDocument(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processEditDocument(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<void>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<void>;
+        }));
+    }
+
+    protected processEditDocument(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return _observableOf<void>(null as any);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<void>(null as any);
+    }
+
+    /**
+     * @param id (optional) 
+     * @return Success
+     */
+    getDocumentForEdit(id: number | undefined): Observable<GetDocumentForEditOutput> {
+        let url_ = this.baseUrl + "/api/services/app/Document/GetDocumentForEdit?";
+        if (id === null)
+            throw new Error("The parameter 'id' cannot be null.");
+        else if (id !== undefined)
+            url_ += "Id=" + encodeURIComponent("" + id) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetDocumentForEdit(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetDocumentForEdit(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<GetDocumentForEditOutput>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<GetDocumentForEditOutput>;
+        }));
+    }
+
+    protected processGetDocumentForEdit(response: HttpResponseBase): Observable<GetDocumentForEditOutput> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = GetDocumentForEditOutput.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<GetDocumentForEditOutput>(null as any);
+    }
+
+    /**
+     * @param id (optional) 
+     * @return Success
+     */
+    deleteDocument(id: number | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/Document/DeleteDocument?";
+        if (id === null)
+            throw new Error("The parameter 'id' cannot be null.");
+        else if (id !== undefined)
+            url_ += "Id=" + encodeURIComponent("" + id) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+            })
+        };
+
+        return this.http.request("delete", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processDeleteDocument(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processDeleteDocument(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<void>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<void>;
+        }));
+    }
+
+    protected processDeleteDocument(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return _observableOf<void>(null as any);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<void>(null as any);
+    }
 }
 
 @Injectable()
@@ -4926,6 +5086,125 @@ export class EditionServiceProxy {
             }));
         }
         return _observableOf<number>(null as any);
+    }
+}
+
+@Injectable()
+export class ServiceProxy {
+    private http: HttpClient;
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        this.http = http;
+        this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "";
+    }
+
+    /**
+     * @param file (optional) 
+     * @return Success
+     */
+    uploadFile(file: FileParameter | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/UploadFile";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = new FormData();
+        if (file === null || file === undefined)
+            throw new Error("The parameter 'file' cannot be null.");
+        else
+            content_.append("file", file.data, file.fileName ? file.fileName : "file");
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processUploadFile(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processUploadFile(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<void>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<void>;
+        }));
+    }
+
+    protected processUploadFile(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return _observableOf<void>(null as any);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<void>(null as any);
+    }
+
+    /**
+     * @param fileName (optional) 
+     * @return Success
+     */
+    downloadFile(fileName: string | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/DownloadFile?";
+        if (fileName === null)
+            throw new Error("The parameter 'fileName' cannot be null.");
+        else if (fileName !== undefined)
+            url_ += "fileName=" + encodeURIComponent("" + fileName) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processDownloadFile(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processDownloadFile(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<void>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<void>;
+        }));
+    }
+
+    protected processDownloadFile(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return _observableOf<void>(null as any);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<void>(null as any);
     }
 }
 
@@ -15831,6 +16110,7 @@ export class CreateDocumentInput implements ICreateDocumentInput {
     doctype!: DocType;
     startDay!: string;
     expireDay!: string;
+    filePath!: string | undefined;
 
     constructor(data?: ICreateDocumentInput) {
         if (data) {
@@ -15848,6 +16128,7 @@ export class CreateDocumentInput implements ICreateDocumentInput {
             this.doctype = _data["doctype"];
             this.startDay = _data["startDay"];
             this.expireDay = _data["expireDay"];
+            this.filePath = _data["filePath"];
         }
     }
 
@@ -15865,6 +16146,7 @@ export class CreateDocumentInput implements ICreateDocumentInput {
         data["doctype"] = this.doctype;
         data["startDay"] = this.startDay;
         data["expireDay"] = this.expireDay;
+        data["filePath"] = this.filePath;
         return data;
     }
 }
@@ -15875,6 +16157,7 @@ export interface ICreateDocumentInput {
     doctype: DocType;
     startDay: string;
     expireDay: string;
+    filePath: string | undefined;
 }
 
 export class CreateEditionDto implements ICreateEditionDto {
@@ -16676,6 +16959,7 @@ export class DocumentListDto implements IDocumentListDto {
     doctype!: DocType;
     startDay!: string | undefined;
     expireDay!: string | undefined;
+    filePath!: string | undefined;
     isDeleted!: boolean;
     deleterUserId!: number | undefined;
     deletionTime!: DateTime | undefined;
@@ -16701,6 +16985,7 @@ export class DocumentListDto implements IDocumentListDto {
             this.doctype = _data["doctype"];
             this.startDay = _data["startDay"];
             this.expireDay = _data["expireDay"];
+            this.filePath = _data["filePath"];
             this.isDeleted = _data["isDeleted"];
             this.deleterUserId = _data["deleterUserId"];
             this.deletionTime = _data["deletionTime"] ? DateTime.fromISO(_data["deletionTime"].toString()) : <any>undefined;
@@ -16726,6 +17011,7 @@ export class DocumentListDto implements IDocumentListDto {
         data["doctype"] = this.doctype;
         data["startDay"] = this.startDay;
         data["expireDay"] = this.expireDay;
+        data["filePath"] = this.filePath;
         data["isDeleted"] = this.isDeleted;
         data["deleterUserId"] = this.deleterUserId;
         data["deletionTime"] = this.deletionTime ? this.deletionTime.toString() : <any>undefined;
@@ -16744,6 +17030,7 @@ export interface IDocumentListDto {
     doctype: DocType;
     startDay: string | undefined;
     expireDay: string | undefined;
+    filePath: string | undefined;
     isDeleted: boolean;
     deleterUserId: number | undefined;
     deletionTime: DateTime | undefined;
@@ -16956,6 +17243,62 @@ export interface IDynamicPropertyValueDto {
     tenantId: number | undefined;
     dynamicPropertyId: number;
     id: number;
+}
+
+export class EditDocumentInput implements IEditDocumentInput {
+    id!: number;
+    idNumber!: string | undefined;
+    title!: string | undefined;
+    startDay!: string | undefined;
+    expireDay!: string | undefined;
+    filePath!: string | undefined;
+
+    constructor(data?: IEditDocumentInput) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.idNumber = _data["idNumber"];
+            this.title = _data["title"];
+            this.startDay = _data["startDay"];
+            this.expireDay = _data["expireDay"];
+            this.filePath = _data["filePath"];
+        }
+    }
+
+    static fromJS(data: any): EditDocumentInput {
+        data = typeof data === 'object' ? data : {};
+        let result = new EditDocumentInput();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["idNumber"] = this.idNumber;
+        data["title"] = this.title;
+        data["startDay"] = this.startDay;
+        data["expireDay"] = this.expireDay;
+        data["filePath"] = this.filePath;
+        return data;
+    }
+}
+
+export interface IEditDocumentInput {
+    id: number;
+    idNumber: string | undefined;
+    title: string | undefined;
+    startDay: string | undefined;
+    expireDay: string | undefined;
+    filePath: string | undefined;
 }
 
 export class EditionCreateDto implements IEditionCreateDto {
@@ -19330,6 +19673,62 @@ export class GetDefaultEditionNameOutput implements IGetDefaultEditionNameOutput
 
 export interface IGetDefaultEditionNameOutput {
     name: string | undefined;
+}
+
+export class GetDocumentForEditOutput implements IGetDocumentForEditOutput {
+    id!: number;
+    idNumber!: string | undefined;
+    title!: string | undefined;
+    startDay!: string | undefined;
+    expireDay!: string | undefined;
+    filePath!: string | undefined;
+
+    constructor(data?: IGetDocumentForEditOutput) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.idNumber = _data["idNumber"];
+            this.title = _data["title"];
+            this.startDay = _data["startDay"];
+            this.expireDay = _data["expireDay"];
+            this.filePath = _data["filePath"];
+        }
+    }
+
+    static fromJS(data: any): GetDocumentForEditOutput {
+        data = typeof data === 'object' ? data : {};
+        let result = new GetDocumentForEditOutput();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["idNumber"] = this.idNumber;
+        data["title"] = this.title;
+        data["startDay"] = this.startDay;
+        data["expireDay"] = this.expireDay;
+        data["filePath"] = this.filePath;
+        return data;
+    }
+}
+
+export interface IGetDocumentForEditOutput {
+    id: number;
+    idNumber: string | undefined;
+    title: string | undefined;
+    startDay: string | undefined;
+    expireDay: string | undefined;
+    filePath: string | undefined;
 }
 
 export class GetEditionEditOutput implements IGetEditionEditOutput {
@@ -28803,6 +29202,11 @@ export class AdditionalData implements IAdditionalData {
 export interface IAdditionalData {
     paypal: { [key: string]: string; };
     stripe: { [key: string]: string; };
+}
+
+export interface FileParameter {
+    data: any;
+    fileName: string;
 }
 
 export class ApiException extends Error {

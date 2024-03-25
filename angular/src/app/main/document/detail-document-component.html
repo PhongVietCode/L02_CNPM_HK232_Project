@@ -1,0 +1,32 @@
+<p-dialog *ngIf="document" header="Information Document" [(visible)]="visible" [style]="{width: '90vw', height: '90vw'}">
+    <div
+        style="display: flex; flex-direction: row; justify-content: start; align-items: center; border: 1px solid #dbdbdb; padding: 0.38em;">
+        <span style="font-size: 1.2rem; font-weight: 400; margin-right: 2rem;">ID Number:</span>
+        <span style="font-size: 1.5rem; font-weight: 800;">{{document.idNumber}}</span>
+    </div>
+    <div
+        style="display: flex; flex-direction: row; justify-content: start; align-items: center; border: 1px solid #dbdbdb; padding: 0.38em;">
+        <span style="font-size: 1.2rem; font-weight: 400; margin-right: 2rem;">Title:</span>
+        <span style="font-size: 1.5rem; font-weight: 800;">{{document.title}}</span>
+    </div>
+    <div
+        style="display: flex; flex-direction: row; justify-content: start; align-items: center; border: 1px solid #dbdbdb; padding: 0.38em;">
+        <span style="font-size: 1.2rem; font-weight: 400; margin-right: 2rem;">Document type:</span>
+        <span style="font-size: 1.5rem; font-weight: 800;">{{getDocumentTypeAsString(document.doctype)}}</span>
+    </div>
+    <div
+        style="display: flex; flex-direction: row; justify-content: start; align-items: center; border: 1px solid #dbdbdb; padding: 0.38em;">
+        <span style="font-size: 1.2rem; font-weight: 400; margin-right: 2rem;">Start Day:</span>
+        <span style="font-size: 1.5rem; font-weight: 800;">{{document.startDay}}</span>
+    </div>
+    <div
+        style="display: flex; flex-direction: row; justify-content: start; align-items: center; border: 1px solid #dbdbdb; padding: 0.38em;">
+        <span style="font-size: 1.2rem; font-weight: 400; margin-right: 2rem;">Expired Day:</span>
+        <span style="font-size: 1.5rem; font-weight: 800;">{{document.expireDay}}</span>
+    </div>
+    <button (click)="preViewDocument()" class="btn btn-primary font-weight-bold close-button mt-3" style="margin-left: 50%;"
+        [disabled]="!document.filePath">
+        {{"View Document" | localize}}
+    </button>
+
+</p-dialog>

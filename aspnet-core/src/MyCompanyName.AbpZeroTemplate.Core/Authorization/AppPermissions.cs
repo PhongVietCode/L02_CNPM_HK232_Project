@@ -79,6 +79,14 @@
 
         public const string Pages_Administration_Tenant_SubscriptionManagement = "Pages.Administration.Tenant.SubscriptionManagement";
 
+        // ==============
+        public const string Pages_Tenants_Document = "Pages.Tenants.Document";
+        public const string Pages_Tenant_Document_CreateDocument = "Pages.Tenant.PhoneBook.CreateDocument";
+        public const string Pages_Tenant_Document_EditDocument = "Pages.Tenant.Document.EditDocument";
+        public const string Pages_Tenant_Document_DeleteDocument = "Pages.Tenant.Document.DeleteDocument";
+        public const string Pages_Tenant_Document_AddNewDocument = "Pages.Tenant.Document.AddNewDocument";
+        //===========
+
         //HOST-SPECIFIC PERMISSIONS
 
         public const string Pages_Editions = "Pages.Editions";

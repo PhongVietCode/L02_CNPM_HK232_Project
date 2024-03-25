@@ -13,5 +13,6 @@ namespace MyCompanyName.AbpZeroTemplate.L02Project.DTO
         public DocType Doctype { get; set; }
         public string StartDay { get; set; }
         public string ExpireDay { get; set; }
+        public string FilePath { get; set; }
     }
 }

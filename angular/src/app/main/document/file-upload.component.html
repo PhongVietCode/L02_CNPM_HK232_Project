@@ -1,0 +1,11 @@
+<form id="fileUploadForm" enctype="multipart/form-data" #fileUploadForm="ngForm" (ngSubmit)="save()">
+    <div class="mb-3">
+        <label for="Document" class="form-label">{{"Document Upload" | localize}}</label>
+        <input class="form-control" type="file" id="Document" name="Document" required
+            (change)="onFileChange($event)">
+    </div>
+    <button type="submit"
+            class="btn btn-light-primary font-weight-bold close-button"
+            [disabled]="!fileUploadForm.form.valid">{{"Upload" | localize}}</button>
+    <button (click)="onDownloadFile($event)">Download</button>
+</form>

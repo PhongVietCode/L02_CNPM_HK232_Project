@@ -11,9 +11,14 @@ namespace MyCompanyName.AbpZeroTemplate.L02Project
 {
     public interface IDocumentAppService: IApplicationService
     {
-        ListResultDto<DocumentListDto> GetDocument(GetDocumentInput input);
+        // create document
         Task CreateDocument(CreateDocumentInput input);
-        //Task EditDocument(EditDocumentInput input);
-        //Task<GetDocumentForEditOutput> GetDocumentForEdit(GetDocumentForEditInput input);
+        // search document
+        ListResultDto<DocumentListDto> GetDocument(GetDocumentInput input);
+        // edit document
+        Task EditDocument(EditDocumentInput input);
+        Task<GetDocumentForEditOutput> GetDocumentForEdit(GetDocumentForEditInput input);
+        // delete document
+        Task DeleteDocument(EntityDto document);
     }
 }

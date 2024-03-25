@@ -8,8 +8,15 @@ import { ToolbarModule } from 'primeng/toolbar';
 import { AutoCompleteModule } from 'primeng/autocomplete';
 import { ButtonModule } from 'primeng/button';
 import { CreateDocumentComponent } from './create-document-component';
+import { FileUploadComponent } from './file-upload.component';
+import { EditDocumentModalComponent } from './edit-document-modal.component';
+import {PdfViewerModule} from 'ng2-pdf-viewer'
+import { DialogModule } from 'primeng/dialog';
+import { AccordionModule } from 'primeng/accordion';
+import { DetailDocumentComponent } from './detail-document-component';
+import { InputTextModule } from 'primeng/inputtext';
 @NgModule({
-    declarations: [DocumentComponent,CreateDocumentComponent,],
+    declarations: [DocumentComponent,CreateDocumentComponent,EditDocumentModalComponent, FileUploadComponent, DetailDocumentComponent],
     imports: [
         AppSharedModule,
         AdminSharedModule, 
@@ -17,8 +24,11 @@ import { CreateDocumentComponent } from './create-document-component';
         FormsModule,
         ToolbarModule,
         AutoCompleteModule,
-        ButtonModule,   
-        
+        ButtonModule,  
+        PdfViewerModule,
+        DialogModule,
+        AccordionModule,
+        InputTextModule
     ],
 })
 export class DocumentModule {}

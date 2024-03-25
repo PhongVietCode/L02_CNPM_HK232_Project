@@ -2,24 +2,14 @@
     <div class="content d-flex flex-column flex-column-fluid">
         <sub-header [title]="Documents | localize" [description]="DocumentsHeaderInfo | localize">
             <div role="actions">
-                <button pButton pRipple label="Add new document" icon="pi pi-plus" class="p-button-primary mr-2" (click)="createDocumentModal.show()"></button>
+                <button *ngIf="'Pages.Tenant.Document.AddNewDocument' | permission" label="Add new document" pButton
+                    icon="pi pi-plus" class="btn btn-primary mr-2" (click)="createDocumentModal.show()"></button>
             </div>
         </sub-header>
-        <div class="card">
-            <div class="col-12 md:col-4 m-4">
-                <div class="p-inputgroup d-flex justify-content-center">
-                    <input type="text" pInputText placeholder="Search" style="border: #828282 solid; width: 90%; height: 40px;">   
-                    <button type="button" pButton pRipple icon="pi pi-search" styleClass="p-button-warn"></button>      
-                </div>
-            </div>
-            <p-table 
-                #dt 
-                [value]="documents"
-                [rowHover]="true"
-                [rows]="10"
-                [paginator]="true"
+        <div class="card" style="padding: 1rem;">
+            <!-- <p-table #dt [value]="documents" [rowHover]="true" [rows]="10" [paginator]="true"
                 currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-                >
+                [(selection)]="selectedDocuments">
                 <ng-template pTemplate="header">
                     <tr>
                         <th style="width: 3rem">
@@ -58,7 +48,7 @@
                     </tr>
                 </ng-template>
                 <ng-template pTemplate="body" let-document>
-                    <tr class="p-selectable-row">
+                    <tr class="p-selectable-row" (click)="detailDocumentModal.show(document)">
                         <td>
                             <p-tableCheckbox [value]="document"></p-tableCheckbox>
                         </td>
@@ -72,7 +62,7 @@
                         </td>
                         <td>
                             <span class="p-column-title">Doctype</span>
-                            {{document.doctype}}
+                            {{getDocumentTypeAsString(document.doctype)}}
                         </td>
                         <td>
                             <span class="p-column-title">Start Day</span>
@@ -82,14 +72,100 @@
                             <span class="p-column-title">Expired Day</span>
                             {{document.expireDay}}
                         </td>
-                        <td style="text-align: center">
-                            <button pButton type="button" class="p-button-info mx-4" icon="pi pi-pencil"></button>
-                            <button pButton type="button" class="p-button-danger" icon="pi pi-trash"></button>
+                        <td style="text-align: center" class="d-flex">
+                            <button pButton type="button" class="p-button-success mx-1" icon="pi pi-download"
+                                (click)="onDocumentDownload(document); $event.stopPropagation()"></button>
+                            <button *ngIf="'Pages.Tenant.Document.EditDocument' | permission" pButton type="button"
+                                class="p-button-info mx-4" icon="pi pi-pencil"
+                                (click)="editDocumentModal.show(document.id); $event.stopPropagation()"></button>
+                            <button *ngIf="'Pages.Tenant.Document.DeleteDocument' | permission" pButton type="button"
+                                class="p-button-danger" icon="pi pi-trash"
+                                (click)="deleteDocument(document); $event.stopPropagation()"></button>
                         </td>
                     </tr>
                 </ng-template>
+            </p-table> -->
+            <!-- ================================= -->
+            <p-table #dt2 [value]="documents" selectionMode="single" dataKey="id" [rows]="10"
+                [showCurrentPageReport]="true" [rowsPerPageOptions]="[10, 25, 50]" [loading]="loading"
+                [paginator]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+                [globalFilterFields]="['idNumber', 'title','doctype', 'startDay', 'expireDay']"
+                [tableStyle]="{ 'min-width': '75rem', 'justify-content': 'center', 'align-items': 'center'}">
+                <ng-template pTemplate="caption">
+                    <div class="flex">
+                        <div class="p-input-icon-left" >
+                            <i class="pi pi-search"></i>
+                            <input pInputText type="text" (input)="dt2.filterGlobal($event.target.value, 'contains')"
+                                placeholder="Search keyword"/>
+                        </div>
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th style="width:12%">ID Number</th>
+                        <th style="width:22%">Title</th>
+                        <th style="width:12%">Doccument Type</th>
+                        <th style="width:12%">Start Day</th>
+                        <th style="width:12%">Expired Day</th>
+                        <th style="width:12%">Methods</th>
+                    </tr>
+                    <tr>
+                        <th>
+                            <p-columnFilter type="text" field="idNumber"></p-columnFilter>
+                        </th>
+                        <th>
+                            <p-columnFilter type="text" field="title"></p-columnFilter>
+                        </th>
+                        <th>
+                            <p-columnFilter type="text" field="doctype"></p-columnFilter>
+                        </th>
+                        <th>
+                            <p-columnFilter type="text" field="startDay"></p-columnFilter>
+                        </th>
+                        <th>
+                            <p-columnFilter type="text" field="expireDay"></p-columnFilter>
+                        </th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-document>
+                    <tr class="p-selectable-row" (click)="detailDocumentModal.show(document)">
+                        <td>
+                            {{ document.idNumber }}
+                        </td>
+                        <td>
+                            {{ document.title }}
+                        </td>
+                        <td>
+                            {{ getDocumentTypeAsString(document.doctype) }}
+                        </td>
+                        <td>
+                            {{ document.startDay }}
+                        </td>
+                        <td>
+                            {{ document.expireDay }}
+                        </td>
+                        <td style="text-align: center" class="d-flex">
+                            <button pButton type="button" class="p-button-success mx-1" icon="pi pi-download"
+                                (click)="onDocumentDownload(document); $event.stopPropagation()"></button>
+                            <button *ngIf="'Pages.Tenant.Document.EditDocument' | permission" pButton type="button"
+                                class="p-button-info mx-4" icon="pi pi-pencil"
+                                (click)="editDocumentModal.show(document.id); $event.stopPropagation()"></button>
+                            <button *ngIf="'Pages.Tenant.Document.DeleteDocument' | permission" pButton type="button"
+                                class="p-button-danger" icon="pi pi-trash"
+                                (click)="deleteDocument(document); $event.stopPropagation()"></button>
+                        </td>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="emptymessage">
+                    <tr>
+                        <td colspan="5">No documents found.</td>
+                    </tr>
+                </ng-template>
             </p-table>
+            <!-- ======================================= -->
         </div>
         <createDocumentModal #createDocumentModal (modalSave)="getDocument()"></createDocumentModal>
+        <editDocumentModal #editDocumentModal (modalSave)="getDocument()"></editDocumentModal>
+        <detailDocumentModal #detailDocumentModal></detailDocumentModal>
     </div>
 </div>

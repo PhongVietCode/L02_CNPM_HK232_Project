@@ -31,6 +31,14 @@ namespace MyCompanyName.AbpZeroTemplate.Authorization
             var pages = context.GetPermissionOrNull(AppPermissions.Pages) ?? context.CreatePermission(AppPermissions.Pages, L("Pages"));
             pages.CreateChildPermission(AppPermissions.Pages_DemoUiComponents, L("DemoUiComponents"));
 
+            var document = pages.CreateChildPermission(AppPermissions.Pages_Tenants_Document, L("Document"), multiTenancySides: MultiTenancySides.Tenant);
+            //document.CreateChildPermission(AppPermissions.Pages_Tenant_Document_CreateDocument, L("CreateNewDocument"), multiTenancySides: MultiTenancySides.Tenant);
+            document.CreateChildPermission(AppPermissions.Pages_Tenant_Document_EditDocument, L("EditDocument"), multiTenancySides: MultiTenancySides.Tenant);
+            document.CreateChildPermission(AppPermissions.Pages_Tenant_Document_DeleteDocument, L("DeleteDocument"), multiTenancySides: MultiTenancySides.Tenant);
+            document.CreateChildPermission(AppPermissions.Pages_Tenant_Document_AddNewDocument, L("AddNewDocument"), multiTenancySides: MultiTenancySides.Tenant);
+
+
+
             var administration = pages.CreateChildPermission(AppPermissions.Pages_Administration, L("Administration"));
 
             var roles = administration.CreateChildPermission(AppPermissions.Pages_Administration_Roles, L("Roles"));

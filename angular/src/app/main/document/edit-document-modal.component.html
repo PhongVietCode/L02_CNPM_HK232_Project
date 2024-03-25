@@ -1,0 +1,76 @@
+<div bsModal #modal="bs-modal" (onShown)="onShown()" class="modal fade" tabindex="-1" role="dialog"
+  aria-labelledby="modal" aria-hidden="true" [config]="{backdrop: 'static'}">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <form *ngIf="active" #documentForm="ngForm" novalidate (ngSubmit)="save()">
+        <div class="modal-header">
+          <h4 class="modal-title">
+            <span>{{"Edit Document" | localize}}</span>
+          </h4>
+          <button type="button" class="close" (click)="close()" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <label class="">{{"ID Number*" | localize}}</label>
+            <input #documentInput class="form-control" type="string" name="idNumber" [(ngModel)]="document.idNumber"
+              required minlength="5" maxlength="12" pattern="^[a-zA-Z]{4}\d+" oninvalid="alert('')">
+            <span style="color: #828282;">Format of ID Number: XXXX12345</span>
+          </div>
+
+          <div class="form-group">
+            <label>{{"Title*" | localize}}</label>
+            <input class="form-control" name="title" [(ngModel)]="document.title" maxlength="200" required>
+          </div>
+          <div class="form-group">
+            <label>{{"StartDay*" | localize}}</label>
+            <input class="form-control" name="startDay" type="date" [(ngModel)]="document.startDay" required>
+          </div>
+          <div class="form-group">
+            <label>{{"ExpiredDay* " | localize}}</label>
+            <input class="form-control" name="expireDay" type="date" [(ngModel)]="document.expireDay" required>
+          </div>
+          <form id="fileUploadForm" enctype="multipart/form-data" #fileUploadForm="ngForm">
+            <div class="mb-3 mt-3" [hidden]="!documentFilePath">
+              <button (click)="deleteFileUpLoad()" class="btn btn-primary">
+                <span>
+                  {{document.filePath}}
+                </span>
+                <i class="pi pi-times" style="font-size: 1.2rem; margin-left: 1rem;"></i>
+              </button>
+            </div>
+            <div class="mb-3" [hidden]="documentFilePath">
+              <label for="Document" class="form-label">{{"Document Upload (PDF or Word)" |
+                localize}}</label>
+              <input class="form-control" type="file" id="Document" name="Document" accept=".pdf, .docx" required
+                (change)="onFileChange($event)">
+              <span>
+                <button (click)="saveFile()" class="btn btn-light-primary font-weight-bold close-button m-4"
+                  [disabled]="!_documentFilePath">
+                  {{"UpLoad" | localize}}
+                </button>
+                <button (click)="showDiaglog()" class="btn btn-light-primary font-weight-bold close-button m-4"
+                  [disabled]="!_documentFilePath">
+                  {{"Preview" | localize}}
+                </button>
+                <p-dialog header="Document" [(visible)]="visible"
+                  [style]="{width: '90vw', height: '100vh', overflow: 'hidden'}">
+                  <pdf-viewer [src]="_documentFilePath" [render-text]="true" [original-size]="false" [autoresize]="true"
+                    style="display: inline-block;"></pdf-viewer>
+                </p-dialog>
+              </span>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button [disabled]="saving" type="button" class="btn btn-secondary" (click)="close()">{{"Cancel" |
+            localize}}</button>
+          <button type="submit" class="btn btn-primary" [disabled]="!documentForm.form.valid" [buttonBusy]="saving"
+            [busyText]="l('SavingWithThreeDot' | localize)"><i class="fa fa-save"></i> <span>{{"Save" |
+              localize}}</span></button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

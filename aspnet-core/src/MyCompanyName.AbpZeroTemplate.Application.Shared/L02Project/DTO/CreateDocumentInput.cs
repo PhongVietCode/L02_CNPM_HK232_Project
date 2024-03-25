@@ -16,5 +16,6 @@ namespace MyCompanyName.AbpZeroTemplate.L02Project.DTO
         public string StartDay { get; set; }
         [Required]
         public string ExpireDay { get; set; }
+        public string FilePath { get; set; }
     }
 }

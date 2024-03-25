@@ -168,8 +168,8 @@ namespace MyCompanyName.AbpZeroTemplate
             /* ADD YOUR OWN CUSTOM AUTOMAPPER MAPPINGS HERE */
 
             configuration.CreateMap<Document, DocumentListDto>();
-            //configuration.CreateMap<Document, GetDocumentForEditOutput>();
             configuration.CreateMap<CreateDocumentInput, Document>();
+            configuration.CreateMap<Document, GetDocumentForEditOutput>();
         }
     }
 }

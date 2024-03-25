@@ -43,6 +43,11 @@
                 "glob": "**/*.*",
                 "input": "node_modules/primeng/resources/themes/mdc-dark-indigo/",
                 "output": "assets/primeng/themes/mdc-dark-indigo/"
+              },
+              {
+                "glob": "**/*",
+                "input": "node_modules/ngx-extended-pdf-viewer/assets/",
+                "output": "/assets/"
               }
             ],
             "styles": [
